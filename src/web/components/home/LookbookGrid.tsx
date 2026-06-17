@@ -59,7 +59,7 @@ export default function LookbookGrid() {
       </motion.div>
 
       {/* Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 auto-rows-[280px] md:auto-rows-[320px]">
+      <div className="home-flowar-tiles grid grid-cols-2 md:grid-cols-3 auto-rows-[280px] md:auto-rows-[320px]">
         {looks.map((look, i) => (
           <motion.div
             key={look.id}
@@ -67,7 +67,7 @@ export default function LookbookGrid() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.1, duration: 0.6, ease: 'easeOut' }}
-            className={`relative overflow-hidden group cursor-pointer bg-[var(--home-ink)] shadow-[0_18px_48px_rgba(17,16,14,0.11)] ${look.span}`}
+            className={`home-image-cell relative overflow-hidden group cursor-pointer bg-[var(--home-ink)] ${look.span}`}
           >
             <img
               src={look.image}

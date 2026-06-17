@@ -10,7 +10,7 @@ const notes = [
 export default function DropIndex() {
   return (
     <section className="home-drop-index">
-      <div className="home-drop-grid">
+      <div className="home-drop-grid home-flowar-frame">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}

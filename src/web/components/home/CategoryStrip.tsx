@@ -35,7 +35,7 @@ export default function CategoryStrip() {
         <p className="text-[12px] font-semibold uppercase text-[var(--home-ink)]">Shop by edit</p>
         <p className="hidden sm:block text-[12px] uppercase text-[var(--home-stone)]">Three exact entry points</p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <div className="home-flowar-tiles grid grid-cols-1 md:grid-cols-3">
         {categories.map((cat, i) => (
           <motion.div
             key={cat.label}
@@ -45,7 +45,7 @@ export default function CategoryStrip() {
             transition={{ delay: i * 0.1, duration: 0.6, ease: 'easeOut' }}
           >
             <Link href={cat.href}>
-              <div className="relative overflow-hidden cursor-pointer group bg-[var(--home-ink)] shadow-[0_18px_48px_rgba(17,16,14,0.11)]" style={{ aspectRatio: '3/4' }}>
+              <div className="home-image-cell relative overflow-hidden cursor-pointer group bg-[var(--home-ink)]" style={{ aspectRatio: '3/4' }}>
                 <img
                   src={cat.image}
                   alt={cat.label}

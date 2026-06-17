@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 
 export default function EditorialBanner() {
   return (
-    <section className="my-8 bg-[var(--home-ink)] text-[var(--home-ivory)]">
-      <div className="grid grid-cols-1 md:grid-cols-5 min-h-[600px] shadow-[0_18px_48px_rgba(17,16,14,0.11)]">
+    <section className="home-editorial-frame my-8 bg-[var(--home-ink)] text-[var(--home-ivory)]">
+      <div className="home-flowar-dark-grid grid grid-cols-1 md:grid-cols-5 min-h-[600px]">
         {/* Image — 60% */}
         <div className="md:col-span-3 relative overflow-hidden" style={{ minHeight: 400 }}>
           <motion.img
