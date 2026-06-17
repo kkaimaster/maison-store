@@ -13,6 +13,7 @@ const slides = [
     cta: 'Shop New In',
     href: '/collections',
     align: 'left',
+    meta: 'New season / 14 pieces',
   },
   {
     id: 2,
@@ -23,6 +24,7 @@ const slides = [
     cta: 'Shop T-Shirts',
     href: '/collections/t-shirts',
     align: 'center',
+    meta: 'Atelier cotton / 5 styles',
   },
   {
     id: 3,
@@ -33,6 +35,7 @@ const slides = [
     cta: 'Shop Bottoms',
     href: '/collections/track-pants',
     align: 'right',
+    meta: 'After dark / city fit',
   },
 ];
 
@@ -63,7 +66,7 @@ export default function HeroSlider() {
   const textAlign = slide.align === 'center' ? 'items-center text-center' : slide.align === 'right' ? 'items-end text-right' : 'items-start text-left';
 
   return (
-    <div className="relative w-full overflow-hidden bg-[#131111]" style={{ height: '100svh', minHeight: 620 }}>
+    <div className="home-hero relative w-full overflow-hidden bg-[#131111]" style={{ height: '100svh', minHeight: 620 }}>
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div
           key={current}
@@ -105,11 +108,12 @@ export default function HeroSlider() {
                 {slide.headline}
               </h1>
               <p className="text-[#FFF8EA]/88 text-base font-light mb-8 max-w-sm leading-relaxed">{slide.sub}</p>
-              <Link href={slide.href}>
-                <button className="bg-[#FFF8EA] text-[#131111] border border-[#FFF8EA] hover:bg-[#E6FF2F] hover:border-[#E6FF2F] transition-colors min-h-12 px-7 py-3 text-xs font-semibold uppercase">
-                  {slide.cta}
-                </button>
-              </Link>
+              <div className="home-hero-actions">
+                <Link href={slide.href}>
+                  <button className="home-hero-btn">{slide.cta}</button>
+                </Link>
+                <span>{slide.meta}</span>
+              </div>
             </motion.div>
           </div>
         </motion.div>

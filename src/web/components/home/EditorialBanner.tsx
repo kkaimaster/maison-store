@@ -30,9 +30,14 @@ export default function EditorialBanner() {
           <h2 className="font-display text-4xl md:text-6xl font-light text-[#FFF8EA] leading-tight mb-6">
             Luxury,<br />Cut Sharper
           </h2>
-          <p className="text-[#c8c0b5] text-sm font-light leading-relaxed mb-8 max-w-xs">
+          <p className="text-[#c8c0b5] text-sm font-light leading-relaxed mb-7 max-w-xs">
             Black, white, and stone essentials styled with a precise streetwear edge.
           </p>
+          <div className="home-edit-specs">
+            <span>Editorial 02</span>
+            <span>Monochrome dressing</span>
+            <span>Private styling ready</span>
+          </div>
           <div className="flex flex-col sm:flex-row gap-3">
             <Link href="/collections">
               <button className="bg-[#FFF8EA] text-[#131111] border border-[#FFF8EA] hover:bg-[#E6FF2F] hover:border-[#E6FF2F] min-h-12 px-6 py-3 text-xs font-semibold uppercase transition-colors">SHOP THE EDIT</button>

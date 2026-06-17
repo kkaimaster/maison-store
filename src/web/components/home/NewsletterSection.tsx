@@ -14,13 +14,13 @@ export default function NewsletterSection() {
   };
 
   return (
-    <section className="bg-[#131111] py-16 px-6 md:px-10 text-[#FFF8EA]">
+    <section className="home-final-cta">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="max-w-2xl mx-auto text-center"
+        className="max-w-2xl mx-auto text-center relative z-10"
       >
         <p className="home-kicker mb-4 mx-auto">Exclusive access</p>
         <h2 className="font-display text-4xl md:text-6xl font-light text-[#FFF8EA] mb-4">

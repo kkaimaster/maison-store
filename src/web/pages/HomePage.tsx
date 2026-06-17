@@ -1,4 +1,5 @@
 import HeroSlider from '../components/home/HeroSlider';
+import DropIndex from '../components/home/DropIndex';
 import CategoryStrip from '../components/home/CategoryStrip';
 import FeaturedProducts from '../components/home/FeaturedProducts';
 import EditorialBanner from '../components/home/EditorialBanner';
@@ -10,6 +11,7 @@ export default function HomePage() {
   return (
     <main className="home-supreme">
       <HeroSlider />
+      <DropIndex />
       <CategoryStrip />
       <FeaturedProducts />
       <EditorialBanner />

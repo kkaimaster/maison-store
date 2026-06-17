@@ -21,6 +21,9 @@ export default function FeaturedProducts() {
         <div>
           <p className="home-kicker mb-3">Just in</p>
           <h2 className="font-display text-4xl md:text-6xl font-light text-[#131111]">New Arrivals</h2>
+          <p className="hidden md:block text-sm text-[#78726d] mt-3 max-w-md">
+            Core pieces selected for the first wear, then kept in rotation.
+          </p>
         </div>
         <Link href="/collections">
           <span className="text-[12px] font-semibold uppercase text-[#131111] hover:bg-[#E6FF2F] transition-colors cursor-pointer border border-[#131111] px-4 py-3 inline-block">
