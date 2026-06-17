@@ -27,7 +27,7 @@ export default function NewsletterSection() {
           Join the Inner Circle
         </h2>
         <p className="text-[#8A8A82] text-sm font-light leading-relaxed mb-8">
-          Be the first to discover new collections, receive private sale access, and explore editorial content curated for you.
+          Be the first to discover new collections, private appointments, and editorial notes curated for you.
         </p>
 
         {submitted ? (

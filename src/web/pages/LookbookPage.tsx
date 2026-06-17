@@ -6,7 +6,7 @@ const looks = [
     id: 1,
     image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900&q=80',
     label: 'LOOK 01',
-    title: 'Effortless White',
+    title: 'Soft Structure',
     products: ['Classic Oversized Tee'],
     handles: ['classic-oversized-tee'],
     desc: 'Pure simplicity. The oversized tee in white against minimal city backdrops.',
@@ -15,7 +15,7 @@ const looks = [
     id: 2,
     image: 'https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=900&q=80',
     label: 'LOOK 02',
-    title: 'Dark Essentials',
+    title: 'Black Line',
     products: ['Essential Slim Tee'],
     handles: ['essential-slim-tee'],
     desc: 'Precision in black. The slim tee engineered for those who live in contrast.',
@@ -24,7 +24,7 @@ const looks = [
     id: 3,
     image: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=900&q=80',
     label: 'LOOK 03',
-    title: 'Urban Motion',
+    title: 'City Ease',
     products: ['Tapered Track Pants'],
     handles: ['tapered-track-pants'],
     desc: 'The elevated trackpant. Polished for the city, free for everywhere else.',
@@ -33,7 +33,7 @@ const looks = [
     id: 4,
     image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=900&q=80',
     label: 'LOOK 04',
-    title: 'Refined Casual',
+    title: 'Ribbed Minimal',
     products: ['Ribbed Cropped Tee'],
     handles: ['ribbed-cropped-tee'],
     desc: 'The crop that commands attention. Ribbed, structured, effortlessly chic.',
@@ -42,7 +42,7 @@ const looks = [
     id: 5,
     image: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=900&q=80',
     label: 'LOOK 05',
-    title: 'Washed Heritage',
+    title: 'Washed Cotton',
     products: ['Washed Vintage Tee'],
     handles: ['washed-vintage-tee'],
     desc: 'Garment-washed character. Worn-in from the moment you put it on.',
@@ -51,7 +51,7 @@ const looks = [
     id: 6,
     image: 'https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?w=900&q=80',
     label: 'LOOK 06',
-    title: 'Graphic Statement',
+    title: 'Archive Graphic',
     products: ['Graphic Heritage Tee'],
     handles: ['graphic-heritage-tee'],
     desc: 'Archival artwork on heavyweight cotton. A piece to collect.',
@@ -76,11 +76,11 @@ export default function LookbookPage() {
             transition={{ duration: 0.8 }}
           >
             <p className="section-label text-[10px] text-[#C9A96E] mb-3">MAISON</p>
-            <h1 className="font-display text-white font-light leading-none" style={{ fontSize: 'clamp(48px, 8vw, 96px)' }}>
-              SS 2025 Collection
+            <h1 className="font-display text-white font-light leading-none text-5xl md:text-7xl lg:text-8xl">
+              The Seasonal Edit
             </h1>
             <p className="text-white/70 text-sm font-light mt-4 max-w-md">
-              Six looks. Six stories. One vision of refined contemporary dressing.
+              Six looks built around texture, restraint, and modern proportion.
             </p>
           </motion.div>
         </div>

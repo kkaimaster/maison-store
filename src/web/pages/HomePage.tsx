@@ -1,4 +1,3 @@
-import AnnouncementBar from '../components/layout/AnnouncementBar';
 import HeroSlider from '../components/home/HeroSlider';
 import CategoryStrip from '../components/home/CategoryStrip';
 import FeaturedProducts from '../components/home/FeaturedProducts';
@@ -10,7 +9,6 @@ import NewsletterSection from '../components/home/NewsletterSection';
 export default function HomePage() {
   return (
     <main>
-      <AnnouncementBar />
       <HeroSlider />
       <CategoryStrip />
       <FeaturedProducts />

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Search, ShoppingBag, Menu, X } from 'lucide-react';
 import { useCartStore } from '../../store/cartStore';
+import AnnouncementBar from './AnnouncementBar';
 import MegaMenu from './MegaMenu';
 import SearchOverlay from './SearchOverlay';
 
@@ -37,6 +38,7 @@ export default function Header() {
           boxShadow: scrolled && !isTransparent ? '0 1px 0 #E8E4DC' : 'none',
         }}
       >
+        {isHome && <AnnouncementBar />}
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Nav Left */}
@@ -124,6 +126,7 @@ export default function Header() {
               <Link href="/collections"><span className="section-label text-[12px] text-[#1A1A18]">SHOP ALL</span></Link>
               <Link href="/collections/t-shirts"><span className="section-label text-[12px] text-[#1A1A18]">T-SHIRTS</span></Link>
               <Link href="/collections/track-pants"><span className="section-label text-[12px] text-[#1A1A18]">TRACK PANTS</span></Link>
+              <Link href="/collections/sale"><span className="section-label text-[12px] text-[#1A1A18]">ARCHIVE</span></Link>
               <Link href="/lookbook"><span className="section-label text-[12px] text-[#1A1A18]">LOOKBOOK</span></Link>
               <Link href="/contact"><span className="section-label text-[12px] text-[#1A1A18]">CONTACT</span></Link>
             </nav>

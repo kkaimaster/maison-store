@@ -1,61 +1,33 @@
-import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
 
-function getTimeLeft(target: Date) {
-  const diff = Math.max(0, target.getTime() - Date.now());
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  const secs = Math.floor((diff % (1000 * 60)) / 1000);
-  return { days, hours, mins, secs, ended: diff === 0 };
-}
+const services = [
+  { label: 'COMPLIMENTARY WRAP', text: 'Prepared in MAISON tissue and signature restraint.' },
+  { label: 'PRIVATE STYLING', text: 'One-to-one wardrobe appointments for fit and pairing.' },
+  { label: 'CONSIDERED RETURNS', text: 'Thirty days to decide, with guided exchanges.' },
+];
 
 export default function PromoCountdown() {
-  const target = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000 + 14 * 60 * 60 * 1000);
-  const [time, setTime] = useState(getTimeLeft(target));
-
-  useEffect(() => {
-    const id = setInterval(() => setTime(getTimeLeft(target)), 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  const pad = (n: number) => String(n).padStart(2, '0');
-
   return (
-    <section className="bg-[#1A1A18] py-12 px-6 md:px-10">
-      <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+    <section className="bg-[#11110F] px-6 md:px-10 py-16">
+      <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-[1.1fr_1.9fr] gap-12 items-start">
         <div>
-          <p className="section-label text-[10px] text-[#C9A96E] mb-2">LIMITED TIME OFFER</p>
-          <h2 className="font-display text-3xl md:text-4xl font-light text-white">
-            {time.ended ? 'SALE ENDED' : 'Summer Sale — Up to 30% Off'}
+          <p className="section-label text-[10px] text-[#C9A96E] mb-3">MAISON SERVICES</p>
+          <h2 className="font-display text-4xl md:text-5xl font-light text-white leading-tight">
+            Luxury in the details.
           </h2>
-          <p className="text-[#8A8A82] text-sm font-light mt-2">On selected T-Shirts. While stocks last.</p>
+          <Link href="/contact">
+            <button className="btn-outline-white mt-8">BOOK STYLING</button>
+          </Link>
         </div>
 
-        {!time.ended && (
-          <div className="flex items-center gap-4 md:gap-6">
-            {[
-              { value: pad(time.days), label: 'DAYS' },
-              { value: pad(time.hours), label: 'HRS' },
-              { value: pad(time.mins), label: 'MIN' },
-              { value: pad(time.secs), label: 'SEC' },
-            ].map((unit, i) => (
-              <div key={unit.label} className="flex items-center gap-4 md:gap-6">
-                <div className="text-center">
-                  <div className="font-display text-5xl md:text-6xl font-light text-white leading-none tabular-nums">
-                    {unit.value}
-                  </div>
-                  <p className="section-label text-[9px] text-[#8A8A82] mt-1">{unit.label}</p>
-                </div>
-                {i < 3 && <span className="font-display text-3xl text-[#C9A96E] font-light leading-none mb-4">:</span>}
-              </div>
-            ))}
-          </div>
-        )}
-
-        <Link href="/collections/sale">
-          <button className="btn-gold whitespace-nowrap">SHOP SALE</button>
-        </Link>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {services.map((service) => (
+            <div key={service.label} className="border-t border-white/18 pt-5">
+              <p className="section-label text-[10px] text-[#C9A96E] mb-3">{service.label}</p>
+              <p className="text-sm text-[#B9B5AA] font-light leading-relaxed">{service.text}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

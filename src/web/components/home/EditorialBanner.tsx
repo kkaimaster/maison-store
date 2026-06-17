@@ -12,7 +12,7 @@ export default function EditorialBanner() {
             whileInView={{ scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 1.2, ease: 'easeOut' }}
-            src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1200&q=85"
+            src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=1200&q=85"
             alt="Editorial"
             className="w-full h-full object-cover absolute inset-0"
           />
@@ -20,18 +20,18 @@ export default function EditorialBanner() {
 
         {/* Copy — 40% */}
         <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2, duration: 0.7, ease: 'easeOut' }}
           className="md:col-span-2 bg-[#F0EDE6] flex flex-col justify-center px-10 md:px-16 py-16"
         >
           <p className="section-label text-[10px] text-[#C9A96E] mb-4">THE MAISON EDIT</p>
           <h2 className="font-display text-4xl md:text-5xl font-light text-[#1A1A18] leading-tight mb-6">
-            Dressed For<br />Every Moment
+            Quiet Luxury,<br />Precisely Cut
           </h2>
           <p className="text-[#8A8A82] text-sm font-light leading-relaxed mb-8 max-w-xs">
-            From the morning commute to after-dark elegance — our refined essentials adapt effortlessly to your world.
+            Elevated cotton, fluid proportions, and a restrained palette for wardrobes that move without shouting.
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
             <Link href="/collections">

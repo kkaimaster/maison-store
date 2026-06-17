@@ -44,7 +44,7 @@ export default function LookbookGrid() {
         className="flex items-end justify-between mb-10"
       >
         <div>
-          <p className="section-label text-[10px] text-[#C9A96E] mb-2">SS 2025</p>
+          <p className="section-label text-[10px] text-[#C9A96E] mb-2">THE EDIT</p>
           <h2 className="font-display text-4xl md:text-5xl font-light text-[#1A1A18]">The Lookbook</h2>
         </div>
         <Link href="/lookbook">

@@ -34,7 +34,7 @@ export default function runableAnalyticsPlugin(): Plugin {
 			// Runable script
 			const script = doc.createElement("script");
 			script.defer = true;
-			script.src = "./runable.js";
+			script.src = "/runable.js";
 			script.dataset.hostname = hostname;
 			script.dataset.url = "https://r.lilstts.com/events";
 			head.appendChild(script);

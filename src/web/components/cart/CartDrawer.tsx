@@ -56,7 +56,7 @@ export default function CartDrawer() {
                 <p className="text-xs text-[#8A8A82] font-light mb-2">
                   {remaining > 0
                     ? `Add $${remaining.toFixed(0)} more for FREE SHIPPING`
-                    : '🎉 You qualify for free shipping!'}
+                    : 'You qualify for free shipping.'}
                 </p>
                 <div className="progress-bar">
                   <div className="progress-bar-fill" style={{ width: `${progress}%` }} />
@@ -65,7 +65,7 @@ export default function CartDrawer() {
             )}
             {sub >= FREE_SHIPPING_THRESHOLD && (
               <div className="px-6 py-3 bg-[#FAFAF8] border-b border-[#E8E4DC]">
-                <p className="text-xs text-[#C9A96E] font-medium section-label text-[10px]">✓ FREE SHIPPING UNLOCKED</p>
+                <p className="text-xs text-[#C9A96E] font-medium section-label text-[10px]">FREE SHIPPING UNLOCKED</p>
               </div>
             )}
 

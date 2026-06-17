@@ -24,11 +24,11 @@ export default function ContactPage() {
           <h1 className="font-display text-5xl md:text-6xl font-light text-[#1A1A18]">Contact Us</h1>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-16 items-start">
           {/* Form */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             {submitted ? (
@@ -100,11 +100,24 @@ export default function ContactPage() {
 
           {/* Brand info */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className="flex flex-col gap-10"
           >
+            <div className="relative overflow-hidden" style={{ aspectRatio: '4/5' }}>
+              <img
+                src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=900&q=85"
+                alt="MAISON styling atelier"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/5 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-8">
+                <p className="section-label text-[10px] text-[#D7BE86] mb-3">CLIENT SERVICES</p>
+                <h2 className="font-display text-4xl font-light text-white leading-tight">Private appointments for fit, styling, and gifting.</h2>
+              </div>
+            </div>
+
             <div>
               <h2 className="font-display text-3xl font-light text-[#1A1A18] mb-6">MAISON</h2>
               <p className="text-[#8A8A82] text-sm font-light leading-relaxed max-w-xs">

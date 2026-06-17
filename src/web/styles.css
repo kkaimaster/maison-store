@@ -74,7 +74,12 @@ body {
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+::selection {
+  background: #C9A96E;
+  color: #1A1A18;
 }
 
 /* Typography */
@@ -183,6 +188,7 @@ h1, h2, h3, h4 {
   border: none;
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease;
+  min-height: 48px;
 }
 .btn-gold:hover {
   background: #B8935A;
@@ -201,6 +207,7 @@ h1, h2, h3, h4 {
   border: none;
   cursor: pointer;
   transition: background 0.2s ease;
+  min-height: 48px;
 }
 .btn-dark:hover {
   background: #C9A96E;
@@ -220,6 +227,7 @@ h1, h2, h3, h4 {
   border: 1px solid #1A1A18;
   cursor: pointer;
   transition: all 0.2s ease;
+  min-height: 48px;
 }
 .btn-outline:hover {
   background: #1A1A18;
@@ -239,6 +247,7 @@ h1, h2, h3, h4 {
   border: 1px solid #FAFAF8;
   cursor: pointer;
   transition: all 0.2s ease;
+  min-height: 48px;
 }
 .btn-outline-white:hover {
   background: #FAFAF8;

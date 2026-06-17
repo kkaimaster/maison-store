@@ -28,7 +28,7 @@ export default function MegaMenu({ open, onClose }: MegaMenuProps) {
                   { label: 'T-Shirts', href: '/collections/t-shirts' },
                   { label: 'Track Pants', href: '/collections/track-pants' },
                   { label: 'New Arrivals', href: '/collections/new-arrivals' },
-                  { label: 'Sale', href: '/collections/sale' },
+                  { label: 'Archive', href: '/collections/sale' },
                 ].map((item) => (
                   <Link key={item.href} href={item.href}>
                     <span

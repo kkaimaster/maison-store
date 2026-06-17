@@ -7,9 +7,9 @@ const slides = [
   {
     id: 1,
     image: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1600&q=85',
-    label: 'SS 2025 COLLECTION',
-    headline: 'SUMMER\nESSENTIALS',
-    sub: 'Refined basics for the discerning eye.',
+    label: 'CURRENT SEASON',
+    headline: 'REFINED\nESSENTIALS',
+    sub: 'Quiet pieces cut with intention, built for daily ritual.',
     cta: 'Shop Now',
     href: '/collections',
     align: 'left',
@@ -17,9 +17,9 @@ const slides = [
   {
     id: 2,
     image: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=1600&q=85',
-    label: 'NEW ARRIVALS',
-    headline: 'THE PERFECT\nTEE',
-    sub: 'Heavyweight cotton. Effortless silhouette.',
+    label: 'ATELIER COTTON',
+    headline: 'THE\nFOUNDATION',
+    sub: 'Weight, drape, and proportion refined to the line.',
     cta: 'Shop T-Shirts',
     href: '/collections/t-shirts',
     align: 'center',
@@ -28,8 +28,8 @@ const slides = [
     id: 3,
     image: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=1600&q=85',
     label: 'MOVEMENT, REFINED',
-    headline: 'ELEVATED\nATHLEISURE',
-    sub: 'Technical luxury for every moment.',
+    headline: 'AFTER\nHOURS',
+    sub: 'Relaxed tailoring for travel, city, and evening ease.',
     cta: 'Shop Bottoms',
     href: '/collections/track-pants',
     align: 'right',
@@ -63,15 +63,15 @@ export default function HeroSlider() {
   const textAlign = slide.align === 'center' ? 'items-center text-center' : slide.align === 'right' ? 'items-end text-right' : 'items-start text-left';
 
   return (
-    <div className="relative w-full overflow-hidden" style={{ height: '100vh', minHeight: 600 }}>
+    <div className="relative w-full overflow-hidden bg-[#0F0F0D]" style={{ height: '100svh', minHeight: 620 }}>
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div
           key={current}
           custom={direction}
           variants={{
-            enter: (d) => ({ opacity: 0, x: d > 0 ? 60 : -60 }),
-            center: { opacity: 1, x: 0 },
-            exit: (d) => ({ opacity: 0, x: d > 0 ? -60 : 60 }),
+            enter: () => ({ opacity: 0, scale: 1.02 }),
+            center: { opacity: 1, scale: 1 },
+            exit: () => ({ opacity: 0, scale: 1.01 }),
           }}
           initial="enter"
           animate="center"
@@ -86,23 +86,25 @@ export default function HeroSlider() {
             className="absolute inset-0 w-full h-full object-cover"
           />
           {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(15,15,13,0.72)_0%,rgba(15,15,13,0.40)_36%,rgba(15,15,13,0.12)_68%,rgba(15,15,13,0.34)_100%)]" />
+          <div className="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-black/45 to-transparent" />
 
           {/* Text content */}
-          <div className={`absolute inset-0 flex flex-col justify-end pb-20 px-10 md:px-20 ${textAlign}`}>
+          <div className={`absolute inset-0 flex flex-col justify-end pb-20 px-8 md:px-20 ${textAlign}`}>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.7, ease: 'easeOut' }}
+              className="max-w-[680px]"
             >
-              <p className="section-label text-[10px] text-[#C9A96E] mb-3">{slide.label}</p>
+              <p className="section-label text-[10px] text-[#D7BE86] mb-3">{slide.label}</p>
               <h1
-                className="font-display text-white font-light mb-4 leading-none"
-                style={{ fontSize: 'clamp(56px, 8vw, 112px)', whiteSpace: 'pre-line' }}
+                className="font-display text-white font-light mb-4 leading-none text-[56px] md:text-[88px] lg:text-[108px]"
+                style={{ whiteSpace: 'pre-line' }}
               >
                 {slide.headline}
               </h1>
-              <p className="text-white/80 text-base font-light mb-8 max-w-xs">{slide.sub}</p>
+              <p className="text-white/86 text-base font-light mb-8 max-w-sm leading-relaxed">{slide.sub}</p>
               <Link href={slide.href}>
                 <button className="btn-outline-white">{slide.cta}</button>
               </Link>

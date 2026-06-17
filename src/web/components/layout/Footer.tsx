@@ -35,7 +35,7 @@ export default function Footer() {
                 { label: 'T-Shirts', href: '/collections/t-shirts' },
                 { label: 'Track Pants', href: '/collections/track-pants' },
                 { label: 'New Arrivals', href: '/collections/new-arrivals' },
-                { label: 'Sale', href: '/collections/sale' },
+                { label: 'Archive', href: '/collections/sale' },
               ].map((item) => (
                 <Link key={item.href} href={item.href}>
                   <span className="text-sm text-[#8A8A82] hover:text-[#F0EDE6] transition-colors cursor-pointer font-light">
@@ -70,7 +70,7 @@ export default function Footer() {
           <div>
             <p className="section-label text-[10px] text-[#C9A96E] mb-5">NEWSLETTER</p>
             <p className="text-sm text-[#8A8A82] font-light leading-relaxed mb-4">
-              Join the inner circle for early access and exclusive offers.
+              Join the inner circle for first access, atelier notes, and private appointments.
             </p>
             <div className="flex flex-col gap-2">
               <input
@@ -87,7 +87,7 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-white/10">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-5 flex flex-col md:flex-row items-center justify-between gap-3">
-          <p className="text-[#8A8A82] text-xs font-light">© 2025 MAISON. All rights reserved.</p>
+          <p className="text-[#8A8A82] text-xs font-light">© 2026 MAISON. All rights reserved.</p>
           <div className="flex items-center gap-2">
             {['visa', 'mc', 'amex', 'paypal'].map((method) => (
               <div key={method} className="bg-white/10 px-2 py-1 rounded-sm">
