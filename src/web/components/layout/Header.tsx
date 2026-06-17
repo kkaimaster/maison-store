@@ -28,14 +28,17 @@ export default function Header() {
   }, [location]);
 
   const isTransparent = isHome && !scrolled && !megaOpen;
+  const homeTextColor = isTransparent ? '#fffaf0' : '#11100e';
+  const defaultTextColor = isTransparent ? '#FAFAF8' : '#1A1A18';
+  const navTextColor = isHome ? homeTextColor : defaultTextColor;
 
   return (
     <>
       <header
         className="fixed top-0 left-0 right-0 z-40 transition-all duration-300"
         style={{
-          background: isTransparent ? 'transparent' : '#FAFAF8',
-          boxShadow: scrolled && !isTransparent ? '0 1px 0 #E8E4DC' : 'none',
+          background: isTransparent ? 'transparent' : isHome ? '#f6f1e8' : '#FAFAF8',
+          boxShadow: scrolled && !isTransparent ? `0 1px 0 ${isHome ? '#d8cbb6' : '#E8E4DC'}` : 'none',
         }}
       >
         {isHome && <AnnouncementBar />}
@@ -50,7 +53,7 @@ export default function Header() {
               >
                 <button
                   className="section-label text-[11px] transition-colors duration-200"
-                  style={{ color: isTransparent ? '#FAFAF8' : '#1A1A18' }}
+                  style={{ color: navTextColor, fontFamily: isHome ? "'Manrope', 'Jost', sans-serif" : undefined, letterSpacing: isHome ? 0 : undefined }}
                 >
                   SHOP
                 </button>
@@ -58,16 +61,16 @@ export default function Header() {
               </div>
               <Link href="/lookbook">
                 <span
-                  className="section-label text-[11px] cursor-pointer transition-colors duration-200 hover:text-[#C9A96E]"
-                  style={{ color: isTransparent ? '#FAFAF8' : '#1A1A18' }}
+                  className="section-label text-[11px] cursor-pointer transition-colors duration-200"
+                  style={{ color: navTextColor, fontFamily: isHome ? "'Manrope', 'Jost', sans-serif" : undefined, letterSpacing: isHome ? 0 : undefined }}
                 >
                   LOOKBOOK
                 </span>
               </Link>
               <Link href="/contact">
                 <span
-                  className="section-label text-[11px] cursor-pointer transition-colors duration-200 hover:text-[#C9A96E]"
-                  style={{ color: isTransparent ? '#FAFAF8' : '#1A1A18' }}
+                  className="section-label text-[11px] cursor-pointer transition-colors duration-200"
+                  style={{ color: navTextColor, fontFamily: isHome ? "'Manrope', 'Jost', sans-serif" : undefined, letterSpacing: isHome ? 0 : undefined }}
                 >
                   CONTACT
                 </span>
@@ -77,8 +80,8 @@ export default function Header() {
             {/* Logo Center */}
             <Link href="/">
               <span
-                className="font-display text-2xl md:text-3xl font-light tracking-[0.28em] cursor-pointer transition-colors duration-200"
-                style={{ color: isTransparent ? '#FAFAF8' : '#1A1A18' }}
+                className="font-display text-2xl md:text-3xl font-light cursor-pointer transition-colors duration-200"
+                style={{ color: navTextColor, fontFamily: isHome ? "'Bodoni Moda', 'Cormorant Garamond', serif" : undefined, letterSpacing: 0 }}
               >
                 MAISON
               </span>
@@ -89,7 +92,7 @@ export default function Header() {
               <button
                 onClick={() => setSearchOpen(true)}
                 className="p-1 transition-colors duration-200"
-                style={{ color: isTransparent ? '#FAFAF8' : '#1A1A18' }}
+                style={{ color: navTextColor }}
                 aria-label="Search"
               >
                 <Search size={18} strokeWidth={1.5} />
@@ -97,19 +100,19 @@ export default function Header() {
               <button
                 onClick={openCart}
                 className="p-1 relative transition-colors duration-200"
-                style={{ color: isTransparent ? '#FAFAF8' : '#1A1A18' }}
+                style={{ color: navTextColor }}
                 aria-label="Cart"
               >
                 <ShoppingBag size={18} strokeWidth={1.5} />
                 {totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-[#C9A96E] text-[#1A1A18] text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                  <span className={`absolute -top-1 -right-1 ${isHome ? 'bg-[#c8b99a] text-[#11100e]' : 'bg-[#C9A96E] text-[#1A1A18]'} text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center`}>
                     {totalItems}
                   </span>
                 )}
               </button>
               <button
                 className="md:hidden p-1"
-                style={{ color: isTransparent ? '#FAFAF8' : '#1A1A18' }}
+                style={{ color: navTextColor }}
                 onClick={() => setMobileOpen(!mobileOpen)}
                 aria-label="Menu"
               >

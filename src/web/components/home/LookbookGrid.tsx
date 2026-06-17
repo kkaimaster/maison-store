@@ -8,6 +8,7 @@ const looks = [
     label: 'LOOK 01',
     title: 'Effortless White',
     span: 'row-span-2',
+    focus: 'center 20%',
   },
   {
     id: 2,
@@ -15,6 +16,7 @@ const looks = [
     label: 'LOOK 02',
     title: 'Dark Essentials',
     span: '',
+    focus: 'center 24%',
   },
   {
     id: 3,
@@ -22,6 +24,7 @@ const looks = [
     label: 'LOOK 03',
     title: 'Urban Motion',
     span: '',
+    focus: 'center 20%',
   },
   {
     id: 4,
@@ -29,6 +32,7 @@ const looks = [
     label: 'LOOK 04',
     title: 'Refined Casual',
     span: 'col-span-2',
+    focus: 'center 32%',
   },
 ];
 
@@ -45,10 +49,10 @@ export default function LookbookGrid() {
       >
         <div>
           <p className="home-kicker mb-3">The edit</p>
-          <h2 className="font-display text-4xl md:text-6xl font-light text-[#131111]">The Lookbook</h2>
+          <h2 className="font-display text-4xl md:text-6xl font-normal text-[var(--home-ink)]">The Lookbook</h2>
         </div>
         <Link href="/lookbook">
-          <span className="text-[12px] font-semibold uppercase text-[#131111] hover:bg-[#E6FF2F] transition-colors cursor-pointer border border-[#131111] px-4 py-3 inline-block">
+          <span className="text-[12px] font-semibold uppercase text-[var(--home-ink)] hover:bg-[var(--home-accent)] transition-colors cursor-pointer shadow-[inset_0_0_0_1px_rgba(200,185,154,0.55)] px-4 py-3 inline-block">
             VIEW ALL
           </span>
         </Link>
@@ -63,19 +67,20 @@ export default function LookbookGrid() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.1, duration: 0.6, ease: 'easeOut' }}
-            className={`relative overflow-hidden group cursor-pointer border border-[#131111] bg-[#131111] ${look.span}`}
+            className={`relative overflow-hidden group cursor-pointer bg-[var(--home-ink)] shadow-[0_18px_48px_rgba(17,16,14,0.11)] ${look.span}`}
           >
             <img
               src={look.image}
               alt={look.title}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              style={{ objectPosition: look.focus }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-transparent to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-400" />
             <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-0 opacity-100 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 transition-all duration-400">
-              <p className="text-[11px] font-semibold uppercase text-[#E6FF2F] mb-1">{look.label}</p>
-              <h3 className="font-display text-[#FFF8EA] text-xl font-light">{look.title}</h3>
+              <p className="text-[11px] font-semibold uppercase text-[var(--home-accent)] mb-1">{look.label}</p>
+              <h3 className="font-display text-[var(--home-ivory)] text-xl font-normal">{look.title}</h3>
               <Link href="/lookbook">
-                <span className="text-[11px] font-semibold uppercase text-white/80 mt-2 inline-block hover:text-[#E6FF2F] transition-colors">
+                <span className="text-[11px] font-semibold uppercase text-white/80 mt-2 inline-block hover:text-[var(--home-accent)] transition-colors">
                   EXPLORE
                 </span>
               </Link>

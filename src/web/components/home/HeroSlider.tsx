@@ -14,6 +14,7 @@ const slides = [
     href: '/collections',
     align: 'left',
     meta: 'New season / 14 pieces',
+    focus: 'center center',
   },
   {
     id: 2,
@@ -25,6 +26,7 @@ const slides = [
     href: '/collections/t-shirts',
     align: 'center',
     meta: 'Atelier cotton / 5 styles',
+    focus: 'center 32%',
   },
   {
     id: 3,
@@ -36,6 +38,7 @@ const slides = [
     href: '/collections/track-pants',
     align: 'right',
     meta: 'After dark / city fit',
+    focus: 'center 24%',
   },
 ];
 
@@ -66,7 +69,7 @@ export default function HeroSlider() {
   const textAlign = slide.align === 'center' ? 'items-center text-center' : slide.align === 'right' ? 'items-end text-right' : 'items-start text-left';
 
   return (
-    <div className="home-hero relative w-full overflow-hidden bg-[#131111]" style={{ height: '100svh', minHeight: 620 }}>
+    <div className="home-hero relative w-full overflow-hidden bg-[var(--home-ink)]" style={{ height: '100svh', minHeight: 620 }}>
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div
           key={current}
@@ -87,10 +90,11 @@ export default function HeroSlider() {
             src={slide.image}
             alt={slide.headline}
             className="absolute inset-0 w-full h-full object-cover"
+            style={{ objectPosition: slide.focus }}
           />
           {/* Overlay */}
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(19,17,17,0.82)_0%,rgba(19,17,17,0.45)_42%,rgba(19,17,17,0.12)_70%,rgba(19,17,17,0.48)_100%)]" />
-          <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-[#131111]/70 to-transparent" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(17,16,14,0.82)_0%,rgba(17,16,14,0.45)_42%,rgba(17,16,14,0.12)_70%,rgba(17,16,14,0.48)_100%)]" />
+          <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-[#11100e]/70 to-transparent" />
 
           {/* Text content */}
           <div className={`absolute inset-0 flex flex-col justify-end pb-24 pt-32 px-6 md:px-20 ${textAlign}`}>
@@ -102,12 +106,12 @@ export default function HeroSlider() {
             >
               <p className="home-kicker mb-4">{slide.label}</p>
               <h1
-                className="font-display text-[#FFF8EA] font-light mb-4 leading-none text-[52px] md:text-[92px] lg:text-[118px]"
+                className="font-display text-[var(--home-ivory)] font-normal mb-4 leading-none text-[50px] md:text-[90px] lg:text-[116px]"
                 style={{ whiteSpace: 'pre-line' }}
               >
                 {slide.headline}
               </h1>
-              <p className="text-[#FFF8EA]/88 text-base font-light mb-8 max-w-sm leading-relaxed">{slide.sub}</p>
+              <p className="text-[#fffaf0]/88 text-base font-normal mb-8 max-w-sm leading-relaxed">{slide.sub}</p>
               <div className="home-hero-actions">
                 <Link href={slide.href}>
                   <button className="home-hero-btn">{slide.cta}</button>
@@ -119,10 +123,10 @@ export default function HeroSlider() {
         </motion.div>
       </AnimatePresence>
 
-      <div className="absolute left-0 right-0 bottom-0 z-10 bg-[#131111] text-[#FFF8EA] border-t border-white/18">
+      <div className="absolute left-0 right-0 bottom-0 z-10 bg-[var(--home-ink)] text-[var(--home-ivory)] border-t border-white/18">
         <div className="px-6 md:px-10 h-10 flex items-center justify-between gap-4 text-[11px] font-semibold uppercase overflow-hidden">
           <span>Maison Store</span>
-          <span className="text-[#E6FF2F]">New season live</span>
+          <span className="text-[var(--home-accent)]">New season live</span>
           <span className="hidden sm:inline">Luxury uniform pieces</span>
         </div>
       </div>
@@ -151,7 +155,7 @@ export default function HeroSlider() {
             style={{
               width: i === current ? 24 : 8,
               height: 2,
-              background: i === current ? '#E6FF2F' : 'rgba(255,255,255,0.5)',
+              background: i === current ? 'var(--home-accent)' : 'rgba(255,250,240,0.5)',
             }}
           />
         ))}

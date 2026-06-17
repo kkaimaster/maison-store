@@ -46,14 +46,14 @@ export default function ProductCard({ product, onQuickView, index = 0 }: Product
       </Link>
 
         <div className="mt-4 px-1">
-        <div className="flex items-start justify-between gap-2">
+        <div className="product-card-meta flex items-start justify-between gap-2">
           <div className="flex-1 min-w-0">
             <Link href={`/products/${product.handle}`}>
-              <h3 className="font-display text-xl font-light text-[#1A1A18] hover:text-[#9D7C44] transition-colors cursor-pointer truncate">{product.title}</h3>
+              <h3 className="product-card-title font-display text-xl font-light text-[#1A1A18] hover:text-[#9D7C44] transition-colors cursor-pointer truncate">{product.title}</h3>
             </Link>
             <p className="section-label text-[9px] text-[#8A8A82] mt-0.5">{product.category}</p>
           </div>
-          <div className="text-right flex-shrink-0">
+          <div className="product-card-price text-right flex-shrink-0">
             {product.isSale && compareAt ? (
               <>
                 <span className="text-[#1A1A18] text-sm font-light">{formatPrice(product.price)}</span>

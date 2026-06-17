@@ -3,10 +3,10 @@ import { motion } from 'framer-motion';
 
 export default function EditorialBanner() {
   return (
-    <section className="my-8 bg-[#131111] text-[#FFF8EA]">
-      <div className="grid grid-cols-1 md:grid-cols-5 min-h-[600px] border-y border-[#131111]">
+    <section className="my-8 bg-[var(--home-ink)] text-[var(--home-ivory)]">
+      <div className="grid grid-cols-1 md:grid-cols-5 min-h-[600px] shadow-[0_18px_48px_rgba(17,16,14,0.11)]">
         {/* Image — 60% */}
-        <div className="md:col-span-3 relative overflow-hidden border-r border-[#131111]" style={{ minHeight: 400 }}>
+        <div className="md:col-span-3 relative overflow-hidden" style={{ minHeight: 400 }}>
           <motion.img
             initial={{ scale: 1.05 }}
             whileInView={{ scale: 1 }}
@@ -15,6 +15,7 @@ export default function EditorialBanner() {
             src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=1200&q=85"
             alt="Editorial"
             className="w-full h-full object-cover absolute inset-0"
+            style={{ objectPosition: 'center 18%' }}
           />
         </div>
 
@@ -24,10 +25,10 @@ export default function EditorialBanner() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2, duration: 0.7, ease: 'easeOut' }}
-          className="md:col-span-2 bg-[#131111] flex flex-col justify-center px-6 md:px-16 py-16"
+          className="md:col-span-2 bg-[var(--home-ink)] flex flex-col justify-center px-6 md:px-16 py-16"
         >
           <p className="home-kicker mb-5">The Maison Edit</p>
-          <h2 className="font-display text-4xl md:text-6xl font-light text-[#FFF8EA] leading-tight mb-6">
+          <h2 className="font-display text-4xl md:text-6xl font-normal text-[var(--home-ivory)] leading-tight mb-6">
             Luxury,<br />Cut Sharper
           </h2>
           <p className="text-[#c8c0b5] text-sm font-light leading-relaxed mb-7 max-w-xs">
@@ -40,10 +41,10 @@ export default function EditorialBanner() {
           </div>
           <div className="flex flex-col sm:flex-row gap-3">
             <Link href="/collections">
-              <button className="bg-[#FFF8EA] text-[#131111] border border-[#FFF8EA] hover:bg-[#E6FF2F] hover:border-[#E6FF2F] min-h-12 px-6 py-3 text-xs font-semibold uppercase transition-colors">SHOP THE EDIT</button>
+              <button className="bg-[var(--home-ivory)] text-[var(--home-ink)] hover:bg-[var(--home-accent)] min-h-12 px-6 py-3 text-xs font-semibold uppercase transition-colors shadow-[0_10px_28px_rgba(17,16,14,0.18)]">SHOP THE EDIT</button>
             </Link>
             <Link href="/lookbook">
-              <button className="bg-transparent text-[#FFF8EA] border border-[#FFF8EA] hover:bg-[#FFF8EA] hover:text-[#131111] min-h-12 px-6 py-3 text-xs font-semibold uppercase transition-colors">VIEW LOOKBOOK</button>
+              <button className="bg-transparent text-[var(--home-ivory)] shadow-[inset_0_0_0_1px_rgba(255,250,240,0.34)] hover:bg-[var(--home-ivory)] hover:text-[var(--home-ink)] min-h-12 px-6 py-3 text-xs font-semibold uppercase transition-colors">VIEW LOOKBOOK</button>
             </Link>
           </div>
         </motion.div>

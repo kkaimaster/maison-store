@@ -46,6 +46,7 @@ export default function DropIndex() {
           <img
             src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=1200&q=85"
             alt="MAISON editorial styling"
+            style={{ objectPosition: 'center 22%' }}
           />
           <div className="home-drop-badge">
             <span>MAISON</span>
