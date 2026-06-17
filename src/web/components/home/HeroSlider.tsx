@@ -7,19 +7,19 @@ const slides = [
   {
     id: 1,
     image: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1600&q=85',
-    label: 'CURRENT SEASON',
-    headline: 'REFINED\nESSENTIALS',
-    sub: 'Quiet pieces cut with intention, built for daily ritual.',
-    cta: 'Shop Now',
+    label: 'DROP 01',
+    headline: 'MAISON\nESSENTIALS',
+    sub: 'Precise everyday layers in black, white, and stone.',
+    cta: 'Shop New In',
     href: '/collections',
     align: 'left',
   },
   {
     id: 2,
     image: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=1600&q=85',
-    label: 'ATELIER COTTON',
-    headline: 'THE\nFOUNDATION',
-    sub: 'Weight, drape, and proportion refined to the line.',
+    label: 'COTTON UNIFORM',
+    headline: 'SHARP\nBASICS',
+    sub: 'Heavyweight cotton, cut clean for repeat wear.',
     cta: 'Shop T-Shirts',
     href: '/collections/t-shirts',
     align: 'center',
@@ -27,9 +27,9 @@ const slides = [
   {
     id: 3,
     image: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=1600&q=85',
-    label: 'MOVEMENT, REFINED',
-    headline: 'AFTER\nHOURS',
-    sub: 'Relaxed tailoring for travel, city, and evening ease.',
+    label: 'CITY UNIFORM',
+    headline: 'AFTER\nDARK',
+    sub: 'Relaxed proportions with a polished street edge.',
     cta: 'Shop Bottoms',
     href: '/collections/track-pants',
     align: 'right',
@@ -63,7 +63,7 @@ export default function HeroSlider() {
   const textAlign = slide.align === 'center' ? 'items-center text-center' : slide.align === 'right' ? 'items-end text-right' : 'items-start text-left';
 
   return (
-    <div className="relative w-full overflow-hidden bg-[#0F0F0D]" style={{ height: '100svh', minHeight: 620 }}>
+    <div className="relative w-full overflow-hidden bg-[#131111]" style={{ height: '100svh', minHeight: 620 }}>
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div
           key={current}
@@ -86,32 +86,42 @@ export default function HeroSlider() {
             className="absolute inset-0 w-full h-full object-cover"
           />
           {/* Overlay */}
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(15,15,13,0.72)_0%,rgba(15,15,13,0.40)_36%,rgba(15,15,13,0.12)_68%,rgba(15,15,13,0.34)_100%)]" />
-          <div className="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-black/45 to-transparent" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(19,17,17,0.82)_0%,rgba(19,17,17,0.45)_42%,rgba(19,17,17,0.12)_70%,rgba(19,17,17,0.48)_100%)]" />
+          <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-[#131111]/70 to-transparent" />
 
           {/* Text content */}
-          <div className={`absolute inset-0 flex flex-col justify-end pb-20 px-8 md:px-20 ${textAlign}`}>
+          <div className={`absolute inset-0 flex flex-col justify-end pb-24 pt-32 px-6 md:px-20 ${textAlign}`}>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.7, ease: 'easeOut' }}
               className="max-w-[680px]"
             >
-              <p className="section-label text-[10px] text-[#D7BE86] mb-3">{slide.label}</p>
+              <p className="home-kicker mb-4">{slide.label}</p>
               <h1
-                className="font-display text-white font-light mb-4 leading-none text-[56px] md:text-[88px] lg:text-[108px]"
+                className="font-display text-[#FFF8EA] font-light mb-4 leading-none text-[52px] md:text-[92px] lg:text-[118px]"
                 style={{ whiteSpace: 'pre-line' }}
               >
                 {slide.headline}
               </h1>
-              <p className="text-white/86 text-base font-light mb-8 max-w-sm leading-relaxed">{slide.sub}</p>
+              <p className="text-[#FFF8EA]/88 text-base font-light mb-8 max-w-sm leading-relaxed">{slide.sub}</p>
               <Link href={slide.href}>
-                <button className="btn-outline-white">{slide.cta}</button>
+                <button className="bg-[#FFF8EA] text-[#131111] border border-[#FFF8EA] hover:bg-[#E6FF2F] hover:border-[#E6FF2F] transition-colors min-h-12 px-7 py-3 text-xs font-semibold uppercase">
+                  {slide.cta}
+                </button>
               </Link>
             </motion.div>
           </div>
         </motion.div>
       </AnimatePresence>
+
+      <div className="absolute left-0 right-0 bottom-0 z-10 bg-[#131111] text-[#FFF8EA] border-t border-white/18">
+        <div className="px-6 md:px-10 h-10 flex items-center justify-between gap-4 text-[11px] font-semibold uppercase overflow-hidden">
+          <span>Maison Store</span>
+          <span className="text-[#E6FF2F]">New season live</span>
+          <span className="hidden sm:inline">Luxury uniform pieces</span>
+        </div>
+      </div>
 
       {/* Arrow controls */}
       <button
@@ -128,7 +138,7 @@ export default function HeroSlider() {
       </button>
 
       {/* Dot indicators */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex gap-2 z-10">
         {slides.map((_, i) => (
           <button
             key={i}
@@ -137,14 +147,14 @@ export default function HeroSlider() {
             style={{
               width: i === current ? 24 : 8,
               height: 2,
-              background: i === current ? '#C9A96E' : 'rgba(255,255,255,0.5)',
+              background: i === current ? '#E6FF2F' : 'rgba(255,255,255,0.5)',
             }}
           />
         ))}
       </div>
 
       {/* Slide counter */}
-      <div className="absolute bottom-8 right-10 z-10">
+      <div className="absolute bottom-16 right-10 z-10">
         <span className="section-label text-[10px] text-white/60">
           {String(current + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
         </span>

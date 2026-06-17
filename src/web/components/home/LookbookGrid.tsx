@@ -34,21 +34,21 @@ const looks = [
 
 export default function LookbookGrid() {
   return (
-    <section className="py-16 px-6 md:px-10 max-w-[1400px] mx-auto">
+    <section className="py-14 px-6 md:px-10 max-w-[1400px] mx-auto">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="flex items-end justify-between mb-10"
+        className="home-rule flex items-end justify-between gap-6 py-5 mb-10"
       >
         <div>
-          <p className="section-label text-[10px] text-[#C9A96E] mb-2">THE EDIT</p>
-          <h2 className="font-display text-4xl md:text-5xl font-light text-[#1A1A18]">The Lookbook</h2>
+          <p className="home-kicker mb-3">The edit</p>
+          <h2 className="font-display text-4xl md:text-6xl font-light text-[#131111]">The Lookbook</h2>
         </div>
         <Link href="/lookbook">
-          <span className="section-label text-[11px] text-[#1A1A18] hover:text-[#C9A96E] transition-colors cursor-pointer border-b border-[#1A1A18] hover:border-[#C9A96E] pb-0.5">
+          <span className="text-[12px] font-semibold uppercase text-[#131111] hover:bg-[#E6FF2F] transition-colors cursor-pointer border border-[#131111] px-4 py-3 inline-block">
             VIEW ALL
           </span>
         </Link>
@@ -63,20 +63,20 @@ export default function LookbookGrid() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.1, duration: 0.6, ease: 'easeOut' }}
-            className={`relative overflow-hidden group cursor-pointer ${look.span}`}
+            className={`relative overflow-hidden group cursor-pointer border border-[#131111] bg-[#131111] ${look.span}`}
           >
             <img
               src={look.image}
               alt={look.title}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
-            <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-400">
-              <p className="section-label text-[9px] text-[#C9A96E] mb-1">{look.label}</p>
-              <h3 className="font-display text-white text-xl font-light">{look.title}</h3>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-transparent to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-400" />
+            <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-0 opacity-100 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 transition-all duration-400">
+              <p className="text-[11px] font-semibold uppercase text-[#E6FF2F] mb-1">{look.label}</p>
+              <h3 className="font-display text-[#FFF8EA] text-xl font-light">{look.title}</h3>
               <Link href="/lookbook">
-                <span className="section-label text-[9px] text-white/70 mt-2 inline-block hover:text-[#C9A96E] transition-colors">
-                  EXPLORE →
+                <span className="text-[11px] font-semibold uppercase text-white/80 mt-2 inline-block hover:text-[#E6FF2F] transition-colors">
+                  EXPLORE
                 </span>
               </Link>
             </div>

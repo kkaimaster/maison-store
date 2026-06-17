@@ -8,7 +8,7 @@ import NewsletterSection from '../components/home/NewsletterSection';
 
 export default function HomePage() {
   return (
-    <main>
+    <main className="home-supreme">
       <HeroSlider />
       <CategoryStrip />
       <FeaturedProducts />

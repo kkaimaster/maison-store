@@ -9,21 +9,21 @@ export default function FeaturedProducts() {
     : products.slice(0, 4);
 
   return (
-    <section className="py-16 px-6 md:px-10 max-w-[1400px] mx-auto">
+    <section className="py-14 px-6 md:px-10 max-w-[1400px] mx-auto">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="flex items-end justify-between mb-10"
+        className="home-rule flex items-end justify-between gap-6 py-5 mb-10"
       >
         <div>
-          <p className="section-label text-[10px] text-[#C9A96E] mb-2">JUST IN</p>
-          <h2 className="font-display text-4xl md:text-5xl font-light text-[#1A1A18]">New Arrivals</h2>
+          <p className="home-kicker mb-3">Just in</p>
+          <h2 className="font-display text-4xl md:text-6xl font-light text-[#131111]">New Arrivals</h2>
         </div>
         <Link href="/collections">
-          <span className="section-label text-[11px] text-[#1A1A18] hover:text-[#C9A96E] transition-colors cursor-pointer border-b border-[#1A1A18] hover:border-[#C9A96E] pb-0.5">
+          <span className="text-[12px] font-semibold uppercase text-[#131111] hover:bg-[#E6FF2F] transition-colors cursor-pointer border border-[#131111] px-4 py-3 inline-block">
             VIEW ALL
           </span>
         </Link>

@@ -265,3 +265,110 @@ h1, h2, h3, h4 {
 ::-webkit-scrollbar-thumb {
   background: #C9A96E;
 }
+
+/* Home-only Supreme-inspired editorial system */
+.home-supreme {
+  --home-ink: #131111;
+  --home-paper: #f4f0e8;
+  --home-stone: #78726d;
+  --home-line: #1f1c1a;
+  --home-accent: #e6ff2f;
+  background: var(--home-paper);
+  color: var(--home-ink);
+}
+
+.home-supreme .section-label,
+.home-supreme .btn-dark,
+.home-supreme .btn-outline,
+.home-supreme .btn-outline-white,
+.home-supreme .btn-gold {
+  letter-spacing: 0;
+}
+
+.home-supreme .home-kicker {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  background: var(--home-accent);
+  color: var(--home-ink);
+  border: 1px solid var(--home-ink);
+  padding: 5px 9px;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.home-supreme .home-cta,
+.home-supreme .home-cta-outline {
+  min-height: 48px;
+  padding: 14px 24px;
+  border: 1px solid var(--home-ink);
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.home-supreme .home-cta {
+  background: var(--home-ink);
+  color: #fffaf0;
+}
+
+.home-supreme .home-cta:hover {
+  background: var(--home-accent);
+  color: var(--home-ink);
+  transform: translateY(-1px);
+}
+
+.home-supreme .home-cta-outline {
+  background: transparent;
+  color: var(--home-ink);
+}
+
+.home-supreme .home-cta-outline:hover {
+  background: var(--home-ink);
+  color: #fffaf0;
+}
+
+.home-supreme .home-rule {
+  border-top: 1px solid var(--home-line);
+  border-bottom: 1px solid var(--home-line);
+}
+
+.home-supreme .product-img-wrapper {
+  border: 1px solid var(--home-ink);
+  background: #fff8ea;
+}
+
+.home-supreme .product-img-wrapper .section-label {
+  background: var(--home-ink);
+  color: #fff8ea;
+}
+
+.home-supreme .quick-view-btn {
+  background: var(--home-accent);
+  color: var(--home-ink);
+  border: 1px solid var(--home-ink);
+}
+
+.home-supreme .quick-view-btn:hover {
+  background: #fff8ea;
+  color: var(--home-ink);
+}
+
+.home-supreme .product-img-wrapper + div h3 {
+  color: var(--home-ink);
+}
+
+.home-supreme .product-img-wrapper + div h3:hover {
+  color: #78726d;
+}
+
+@media (max-width: 767px) {
+  .home-supreme .home-cta,
+  .home-supreme .home-cta-outline {
+    width: 100%;
+  }
+}

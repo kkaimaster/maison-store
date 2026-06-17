@@ -14,26 +14,26 @@ export default function NewsletterSection() {
   };
 
   return (
-    <section className="bg-[#F0EDE6] py-20 px-6 md:px-10">
+    <section className="bg-[#131111] py-16 px-6 md:px-10 text-[#FFF8EA]">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="max-w-xl mx-auto text-center"
+        className="max-w-2xl mx-auto text-center"
       >
-        <p className="section-label text-[10px] text-[#C9A96E] mb-4">EXCLUSIVE ACCESS</p>
-        <h2 className="font-display text-4xl md:text-5xl font-light text-[#1A1A18] mb-4">
+        <p className="home-kicker mb-4 mx-auto">Exclusive access</p>
+        <h2 className="font-display text-4xl md:text-6xl font-light text-[#FFF8EA] mb-4">
           Join the Inner Circle
         </h2>
-        <p className="text-[#8A8A82] text-sm font-light leading-relaxed mb-8">
+        <p className="text-[#c8c0b5] text-sm font-light leading-relaxed mb-8 max-w-xl mx-auto">
           Be the first to discover new collections, private appointments, and editorial notes curated for you.
         </p>
 
         {submitted ? (
           <div className="py-4">
-            <p className="font-display text-2xl text-[#1A1A18] font-light">Thank you for joining.</p>
-            <p className="text-[#8A8A82] text-sm mt-2">Welcome to MAISON.</p>
+            <p className="font-display text-2xl text-[#FFF8EA] font-light">Thank you for joining.</p>
+            <p className="text-[#c8c0b5] text-sm mt-2">Welcome to MAISON.</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-0 max-w-md mx-auto">
@@ -43,15 +43,15 @@ export default function NewsletterSection() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Your email address"
               required
-              className="flex-1 bg-white border border-[#D1CCC3] border-r-0 px-5 py-4 text-sm text-[#1A1A18] placeholder-[#8A8A82] outline-none focus:border-[#C9A96E] transition-colors font-light"
+              className="flex-1 bg-[#FFF8EA] border border-[#FFF8EA] sm:border-r-0 px-5 py-4 text-sm text-[#131111] placeholder-[#78726d] outline-none focus:border-[#E6FF2F] transition-colors font-light min-h-12"
             />
-            <button type="submit" className="btn-dark px-8 py-4 whitespace-nowrap border-0">
+            <button type="submit" className="bg-[#E6FF2F] text-[#131111] border border-[#E6FF2F] hover:bg-[#FFF8EA] hover:border-[#FFF8EA] px-8 py-4 whitespace-nowrap text-xs font-semibold uppercase transition-colors min-h-12">
               SUBSCRIBE
             </button>
           </form>
         )}
 
-        <p className="text-[#8A8A82] text-xs font-light mt-4">
+        <p className="text-[#9f978e] text-xs font-light mt-4">
           By subscribing you agree to our Privacy Policy. Unsubscribe at any time.
         </p>
       </motion.div>
