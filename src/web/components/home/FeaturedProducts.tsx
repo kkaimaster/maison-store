@@ -1,16 +1,36 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'wouter';
 import { motion } from 'framer-motion';
-import { products } from '../../data/products';
+import type { Product } from '../../../shared/product';
+import { productService } from '../../services/productService';
 import ProductGrid from '../product/ProductGrid';
+import ProductSkeleton from '../product/ProductSkeleton';
 
 export default function FeaturedProducts() {
-  const featured = products.filter((p) => p.isNew).slice(0, 4).length >= 4
-    ? products.filter((p) => p.isNew).slice(0, 4)
-    : products.slice(0, 4);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    productService
+      .listProducts()
+      .then((list) => {
+        if (cancelled) return;
+        const newArrivals = list.filter((p) => p.isNew);
+        const featured = newArrivals.length >= 4 ? newArrivals.slice(0, 4) : list.slice(0, 4);
+        setProducts(featured);
+        setLoading(false);
+      })
+      .catch(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <section className="py-14 px-6 md:px-10 max-w-[1400px] mx-auto">
-      {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -32,7 +52,7 @@ export default function FeaturedProducts() {
         </Link>
       </motion.div>
 
-      <ProductGrid products={featured} cols={4} />
+      {loading ? <ProductSkeleton count={4} cols={4} /> : <ProductGrid products={products} cols={4} />}
     </section>
   );
 }

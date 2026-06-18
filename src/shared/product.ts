@@ -3,7 +3,13 @@ export interface ProductColor {
   hex: string;
 }
 
-export type ProductCategory = 'T-Shirts' | 'Track Pants';
+/**
+ * `category` is a free-form string sourced from Shopify's productType.
+ * The slug used in URLs is derived from the category (e.g. "T-Shirts" → "t-shirts").
+ * Existing code uses both legacy values ('T-Shirts' | 'Track Pants') and any
+ * future categories added in Shopify.
+ */
+export type ProductCategory = string;
 
 export interface Product {
   id: string;

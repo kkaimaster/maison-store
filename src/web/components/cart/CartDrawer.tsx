@@ -2,6 +2,7 @@ import { X, ShoppingBag, Trash2, Plus, Minus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'wouter';
 import { useCartStore } from '../../store/cartStore';
+import { formatPrice } from '../../lib/pricing';
 
 const FREE_SHIPPING_THRESHOLD = 150;
 
@@ -55,7 +56,7 @@ export default function CartDrawer() {
               <div className="px-6 py-3 bg-[#FAFAF8] border-b border-[#E8E4DC]">
                 <p className="text-xs text-[#8A8A82] font-light mb-2">
                   {remaining > 0
-                    ? `Add $${remaining.toFixed(0)} more for FREE SHIPPING`
+                    ? `Add ${formatPrice(remaining).replace('.00', '')} more for FREE SHIPPING`
                     : 'You qualify for free shipping.'}
                 </p>
                 <div className="progress-bar">
@@ -126,7 +127,7 @@ export default function CartDrawer() {
                             </button>
                           </div>
                           <span className="text-sm font-light text-[#1A1A18]">
-                            ${(item.product.price * item.quantity).toFixed(2)}
+                            {formatPrice(item.product.price * item.quantity)}
                           </span>
                         </div>
                       </div>
@@ -141,7 +142,7 @@ export default function CartDrawer() {
               <div className="border-t border-[#E8E4DC] px-6 py-5 bg-white">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-sm font-light text-[#8A8A82]">Subtotal</span>
-                  <span className="font-display text-xl font-light text-[#1A1A18]">${sub.toFixed(2)}</span>
+                  <span className="font-display text-xl font-light text-[#1A1A18]">{formatPrice(sub)}</span>
                 </div>
                 <p className="text-xs text-[#8A8A82] font-light mb-4">
                   {sub >= FREE_SHIPPING_THRESHOLD ? 'Free shipping' : 'Shipping calculated at checkout'}

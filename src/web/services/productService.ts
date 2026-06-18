@@ -1,50 +1,104 @@
 import type { Product } from '../../shared/product';
+import {
+  shopifyFetch,
+  mapShopifyProduct,
+  categorySlug,
+  QUERY_PRODUCTS,
+  QUERY_PRODUCT_BY_HANDLE,
+  QUERY_PRODUCTS_BY_TYPE,
+  ProductsListResponse,
+  ProductResponse,
+} from './shopify';
 
 export type SortOption = 'featured' | 'price-asc' | 'price-desc' | 'newest';
 
 let productCache: Product[] | null = null;
+let cachePromise: Promise<Product[]> | null = null;
 
-async function apiGet<T>(path: string): Promise<T> {
-  const response = await fetch(path);
-  if (!response.ok) {
-    throw new Error(`API request failed (${response.status})`);
+const fetchAllProducts = async (force = false): Promise<Product[]> => {
+  if (!force && productCache) return productCache;
+  if (!force && cachePromise) return cachePromise;
+  cachePromise = (async () => {
+    const data = await shopifyFetch<ProductsListResponse>(QUERY_PRODUCTS, { first: 100 });
+    const list = data.products.edges.map((edge) => mapShopifyProduct(edge.node));
+    productCache = list;
+    return list;
+  })();
+  try {
+    return await cachePromise;
+  } finally {
+    cachePromise = null;
   }
-  const payload = (await response.json()) as { data: T };
-  return payload.data;
-}
+};
 
 export const productService = {
   async listProducts(forceRefresh = false): Promise<Product[]> {
-    if (!forceRefresh && productCache) return productCache;
-    const data = await apiGet<Product[]>('/api/products');
-    productCache = data;
-    return data;
+    return fetchAllProducts(forceRefresh);
   },
+
   async getProductByHandle(handle: string): Promise<Product | null> {
     try {
-      return await apiGet<Product>(`/api/products/${handle}`);
-    } catch {
+      const data = await shopifyFetch<ProductResponse>(QUERY_PRODUCT_BY_HANDLE, { handle });
+      return data.product ? mapShopifyProduct(data.product) : null;
+    } catch (err) {
+      console.error('getProductByHandle failed', err);
       return null;
     }
   },
-  async getRelatedProducts(handle: string): Promise<Product[]> {
-    return apiGet<Product[]>(`/api/products/${handle}/related`);
-  }
+
+  async getRelatedProducts(handle: string, count = 3): Promise<Product[]> {
+    const all = await fetchAllProducts().catch(() => [] as Product[]);
+    const current = all.find((p) => p.handle === handle);
+    if (!current) return all.slice(0, count);
+
+    const sameCategory = all.filter(
+      (p) => p.id !== current.id && categorySlug(p.category) === categorySlug(current.category),
+    );
+    if (sameCategory.length >= count) return sameCategory.slice(0, count);
+    const rest = all.filter((p) => p.id !== current.id);
+    return rest.slice(0, count);
+  },
+
+  /**
+   * Best-effort: ask Shopify for products matching a category, but also
+   * fall back to the in-memory list. Useful for very large catalogs.
+   */
+  async listByCategory(category: string, count = 100): Promise<Product[]> {
+    try {
+      const data = await shopifyFetch<ProductsListResponse>(QUERY_PRODUCTS_BY_TYPE, {
+        query: `product_type:'${category.replace(/'/g, '')}'`,
+        first: count,
+      });
+      return data.products.edges.map((edge) => mapShopifyProduct(edge.node));
+    } catch (err) {
+      const all = await fetchAllProducts().catch(() => [] as Product[]);
+      return all.filter((p) => categorySlug(p.category) === categorySlug(category));
+    }
+  },
 };
+
+/* ------------------------------------------------------------------ */
+/*  Local filter & sort (unchanged contract, but category-aware)       */
+/* ------------------------------------------------------------------ */
 
 export function filterAndSortProducts(
   products: Product[],
   handle: string | undefined,
   sizes: string[],
   colors: string[],
-  sortBy: SortOption
+  sortBy: SortOption,
 ): Product[] {
   let list = [...products];
 
-  if (handle === 't-shirts') list = list.filter((p) => p.category === 'T-Shirts');
-  else if (handle === 'track-pants') list = list.filter((p) => p.category === 'Track Pants');
-  else if (handle === 'new-arrivals') list = list.filter((p) => p.isNew);
-  else if (handle === 'sale') list = list.filter((p) => p.isSale);
+  if (handle === 'new-arrivals') {
+    list = list.filter((p) => p.isNew);
+  } else if (handle === 'sale') {
+    list = list.filter((p) => p.isSale);
+  } else if (handle && handle !== 'all') {
+    // Normalize the URL slug and compare against each product's category slug.
+    const target = categorySlug(handle);
+    list = list.filter((p) => categorySlug(p.category) === target);
+  }
 
   if (sizes.length > 0) {
     list = list.filter((p) => p.sizes.some((s) => sizes.includes(s)));
