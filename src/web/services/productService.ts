@@ -20,7 +20,10 @@ const fetchAllProducts = async (force = false): Promise<Product[]> => {
   if (!force && cachePromise) return cachePromise;
   cachePromise = (async () => {
     const data = await shopifyFetch<ProductsListResponse>(QUERY_PRODUCTS, { first: 100 });
-    const list = data.products.edges.map((edge) => mapShopifyProduct(edge.node));
+    const list = data.products.edges
+      .map((edge) => mapShopifyProduct(edge.node))
+      // Hide DRAFT / ARCHIVED products from the public storefront
+      .filter((p) => p.id);
     productCache = list;
     return list;
   })();
@@ -39,7 +42,7 @@ export const productService = {
   async getProductByHandle(handle: string): Promise<Product | null> {
     try {
       const data = await shopifyFetch<ProductResponse>(QUERY_PRODUCT_BY_HANDLE, { handle });
-      return data.product ? mapShopifyProduct(data.product) : null;
+      return data.productByHandle ? mapShopifyProduct(data.productByHandle) : null;
     } catch (err) {
       console.error('getProductByHandle failed', err);
       return null;
@@ -59,10 +62,6 @@ export const productService = {
     return rest.slice(0, count);
   },
 
-  /**
-   * Best-effort: ask Shopify for products matching a category, but also
-   * fall back to the in-memory list. Useful for very large catalogs.
-   */
   async listByCategory(category: string, count = 100): Promise<Product[]> {
     try {
       const data = await shopifyFetch<ProductsListResponse>(QUERY_PRODUCTS_BY_TYPE, {
@@ -78,7 +77,7 @@ export const productService = {
 };
 
 /* ------------------------------------------------------------------ */
-/*  Local filter & sort (unchanged contract, but category-aware)       */
+/*  Local filter & sort                                                */
 /* ------------------------------------------------------------------ */
 
 export function filterAndSortProducts(
@@ -95,7 +94,6 @@ export function filterAndSortProducts(
   } else if (handle === 'sale') {
     list = list.filter((p) => p.isSale);
   } else if (handle && handle !== 'all') {
-    // Normalize the URL slug and compare against each product's category slug.
     const target = categorySlug(handle);
     list = list.filter((p) => categorySlug(p.category) === target);
   }

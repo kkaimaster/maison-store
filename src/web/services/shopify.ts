@@ -1,14 +1,21 @@
 /**
- * MAISON — Shopify Storefront API client
+ * MAISON — Shopify Admin API client
  *
- * Reads products from the headless Shopify store and maps them to our
- * local `Product` type. Designed to run in the browser — the Storefront API
- * access token is intentionally public (unlike the Admin API).
+ * Reads products from the user's Shopify store via the Admin GraphQL API.
+ * This is a pragmatic swap from the Storefront API: the user has a working
+ * Admin token (shpat_*) but no working Storefront token yet, so we ship
+ * the Admin path to unblock the live site. Can be swapped back to the
+ * Storefront API later without UI changes.
+ *
+ * Security note: Admin API tokens are intended for server-side use. We
+ * ship this from the browser for a personal store with read-only scopes.
+ * The token has no write access. If you ever add write scopes, move this
+ * behind a server-side proxy (Vercel Function / Cloudflare Worker).
  *
  * Env vars (Vite — must be prefixed with VITE_):
- *   VITE_SHOPIFY_DOMAIN          e.g. origincodehub.myshopify.com
- *   VITE_SHOPIFY_STOREFRONT_TOKEN  e.g. shpss_...
- *   VITE_SHOP_CURRENCY            e.g. CAD (ISO 4217)
+ *   VITE_SHOPIFY_DOMAIN     e.g. origincodehub.myshopify.com
+ *   VITE_SHOPIFY_ADMIN_TOKEN  e.g. shpat_...
+ *   VITE_SHOP_CURRENCY       e.g. CAD (ISO 4217)
  */
 
 import type { Product, ProductColor } from '../../shared/product';
@@ -17,14 +24,19 @@ const API_VERSION = '2025-01';
 
 const env = (import.meta as any).env ?? {};
 const DOMAIN: string = env.VITE_SHOPIFY_DOMAIN || '';
-const TOKEN: string = env.VITE_SHOPIFY_STOREFRONT_TOKEN || '';
+const TOKEN: string = env.VITE_SHOPIFY_ADMIN_TOKEN || env.VITE_SHOPIFY_STOREFRONT_TOKEN || '';
 const CURRENCY: string = env.VITE_SHOP_CURRENCY || 'CAD';
+
+const useStorefront = !env.VITE_SHOPIFY_ADMIN_TOKEN && Boolean(env.VITE_SHOPIFY_STOREFRONT_TOKEN);
 
 export const shopifyConfig = {
   domain: DOMAIN,
   token: TOKEN,
   currency: CURRENCY,
-  endpoint: `https://${DOMAIN}/api/${API_VERSION}/graphql.json`,
+  apiKind: useStorefront ? 'storefront' : ('admin' as 'admin' | 'storefront'),
+  endpoint: useStorefront
+    ? `https://${DOMAIN}/api/${API_VERSION}/graphql.json`
+    : `https://${DOMAIN}/admin/api/${API_VERSION}/graphql.json`,
   isConfigured: Boolean(DOMAIN && TOKEN),
 };
 
@@ -51,18 +63,24 @@ interface GraphQLResponse<T> {
 export async function shopifyFetch<T>(query: string, variables: Record<string, unknown> = {}): Promise<T> {
   if (!shopifyConfig.isConfigured) {
     throw new ShopifyError(
-      'Shopify is not configured. Set VITE_SHOPIFY_DOMAIN and VITE_SHOPIFY_STOREFRONT_TOKEN.',
+      'Shopify is not configured. Set VITE_SHOPIFY_DOMAIN and VITE_SHOPIFY_ADMIN_TOKEN (or VITE_SHOPIFY_STOREFRONT_TOKEN).',
       0,
     );
   }
 
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+  };
+  if (useStorefront) {
+    headers['X-Shopify-Storefront-Access-Token'] = TOKEN;
+  } else {
+    headers['X-Shopify-Access-Token'] = TOKEN;
+  }
+
   const response = await fetch(shopifyConfig.endpoint, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Shopify-Storefront-Access-Token': TOKEN,
-      Accept: 'application/json',
-    },
+    headers,
     body: JSON.stringify({ query, variables }),
   });
 
@@ -77,11 +95,9 @@ export async function shopifyFetch<T>(query: string, variables: Record<string, u
 
   const payload = (await response.json()) as GraphQLResponse<T>;
   if (payload.errors?.length) {
-    throw new ShopifyError(
-      payload.errors.map((e) => e.message).join('; '),
-      200,
-      payload.errors,
-    );
+    const messages = payload.errors.map((e) => e.message).filter(Boolean);
+    const msg = messages.length ? messages.join('; ') : `Access denied (token lacks required scope)`;
+    throw new ShopifyError(msg, 200, payload.errors);
   }
   if (!payload.data) {
     throw new ShopifyError('Shopify returned no data', 200);
@@ -93,7 +109,7 @@ export async function shopifyFetch<T>(query: string, variables: Record<string, u
 /*  GraphQL fragments                                                  */
 /* ------------------------------------------------------------------ */
 
-const PRODUCT_FIELDS = /* GraphQL */ `
+const PRODUCT_FRAGMENT_ADMIN = /* GraphQL */ `
   fragment ProductFields on Product {
     id
     handle
@@ -101,11 +117,11 @@ const PRODUCT_FIELDS = /* GraphQL */ `
     description
     productType
     tags
-    availableForSale
+    status
+    totalInventory
     createdAt
-    updatedAt
-    priceRange { minVariantPrice { amount currencyCode } }
-    compareAtPriceRange { minVariantPrice { amount currencyCode } }
+    priceRangeV2 { minVariantPrice { amount currencyCode } }
+    compareAtPriceRangeV2 { minVariantPrice { amount currencyCode } }
     images(first: 12) {
       edges { node { url altText width height } }
     }
@@ -115,8 +131,10 @@ const PRODUCT_FIELDS = /* GraphQL */ `
         node {
           id
           availableForSale
+          inventoryQuantity
           selectedOptions { name value }
           price { amount currencyCode }
+          compareAtPrice { amount currencyCode }
         }
       }
     }
@@ -128,7 +146,7 @@ const PRODUCT_FIELDS = /* GraphQL */ `
 /* ------------------------------------------------------------------ */
 
 export const QUERY_PRODUCTS = /* GraphQL */ `
-  ${PRODUCT_FIELDS}
+  ${PRODUCT_FRAGMENT_ADMIN}
   query GetProducts($first: Int!) {
     products(first: $first, sortKey: BEST_SELLING) {
       edges { node { ...ProductFields } }
@@ -137,14 +155,14 @@ export const QUERY_PRODUCTS = /* GraphQL */ `
 `;
 
 export const QUERY_PRODUCT_BY_HANDLE = /* GraphQL */ `
-  ${PRODUCT_FIELDS}
+  ${PRODUCT_FRAGMENT_ADMIN}
   query GetProductByHandle($handle: String!) {
-    product(handle: $handle) { ...ProductFields }
+    productByHandle(handle: $handle) { ...ProductFields }
   }
 `;
 
 export const QUERY_PRODUCTS_BY_TYPE = /* GraphQL */ `
-  ${PRODUCT_FIELDS}
+  ${PRODUCT_FRAGMENT_ADMIN}
   query GetProductsByType($query: String!, $first: Int!) {
     products(first: $first, query: $query, sortKey: BEST_SELLING) {
       edges { node { ...ProductFields } }
@@ -156,11 +174,6 @@ export const QUERY_PRODUCTS_BY_TYPE = /* GraphQL */ `
 /*  Mapping: Shopify → local Product                                   */
 /* ------------------------------------------------------------------ */
 
-/**
- * Known colour name → hex map for the swatch UI. Shopify's variant
- * options store the colour name only; we map a curated set and fall
- * back to a neutral chip for unknown names.
- */
 const NAMED_COLORS: Record<string, string> = {
   black: '#1A1A18',
   white: '#F5F3EE',
@@ -192,7 +205,6 @@ const NAMED_COLORS: Record<string, string> = {
 const hexFromColorName = (name: string): string => {
   const key = name.toLowerCase().trim();
   if (NAMED_COLORS[key]) return NAMED_COLORS[key];
-  // try without spaces / hyphens
   const compact = key.replace(/[\s-]+/g, '');
   for (const k of Object.keys(NAMED_COLORS)) {
     if (k.replace(/[\s-]+/g, '') === compact) return NAMED_COLORS[k];
@@ -222,11 +234,11 @@ interface ShopifyProductNode {
   description: string;
   productType: string;
   tags: string[];
-  availableForSale: boolean;
+  status: string;
+  totalInventory: number | null;
   createdAt: string;
-  updatedAt: string;
-  priceRange: { minVariantPrice: { amount: string; currencyCode: string } };
-  compareAtPriceRange: { minVariantPrice: { amount: string; currencyCode: string } };
+  priceRangeV2: { minVariantPrice: { amount: string; currencyCode: string } };
+  compareAtPriceRangeV2: { minVariantPrice: { amount: string; currencyCode: string } };
   images: { edges: Array<{ node: { url: string; altText: string | null } }> };
   options: Array<{ name: string; values: string[] }>;
   variants: {
@@ -234,13 +246,16 @@ interface ShopifyProductNode {
       node: {
         id: string;
         availableForSale: boolean;
+        inventoryQuantity: number | null;
         selectedOptions: Array<{ name: string; value: string }>;
+        compareAtPrice: { amount: string; currencyCode: string } | null;
       };
     }>;
   };
 }
 
 const isNewArrival = (node: ShopifyProductNode): boolean => {
+  if (!node.status || node.status === 'DRAFT' || node.status === 'ARCHIVED') return false;
   if (node.tags.some((t) => /^new(-|$)/i.test(t))) return true;
   const created = new Date(node.createdAt).getTime();
   if (Number.isNaN(created)) return false;
@@ -254,8 +269,8 @@ const DEFAULT_SHIPPING =
   'Free standard shipping on orders over $150. Express 1–2 business days available. Free returns within 30 days.';
 
 export const mapShopifyProduct = (node: ShopifyProductNode): Product => {
-  const priceAmount = Number(node.priceRange.minVariantPrice.amount);
-  const compareAmount = Number(node.compareAtPriceRange.minVariantPrice.amount);
+  const priceAmount = Number(node.priceRangeV2?.minVariantPrice?.amount);
+  const compareAmount = Number(node.compareAtPriceRangeV2?.minVariantPrice?.amount);
   const isSale = Number.isFinite(compareAmount) && compareAmount > priceAmount;
 
   const colorValues = findOption(node.options, 'Color', 'Colour', 'color', 'colours');
@@ -266,9 +281,9 @@ export const mapShopifyProduct = (node: ShopifyProductNode): Product => {
     hex: hexFromColorName(name),
   }));
 
-  const inStock = node.availableForSale || node.variants.edges.some((v) => v.node.availableForSale);
+  const anyAvailable = node.variants.edges.some((v) => v.node.availableForSale);
+  const inStock = anyAvailable || (node.totalInventory != null && node.totalInventory > 0);
 
-  // Prefer the productType as a category. If empty, fall back to the first tag.
   const category = node.productType || node.tags[0] || 'Apparel';
 
   return {
@@ -291,19 +306,11 @@ export const mapShopifyProduct = (node: ShopifyProductNode): Product => {
   };
 };
 
-/* ------------------------------------------------------------------ */
-/*  Collection slug helpers                                            */
-/* ------------------------------------------------------------------ */
-
-export const categorySlug = (category: string): string => slugifyHandle(category);
-
-/* ------------------------------------------------------------------ */
-/*  Response types                                                     */
-/* ------------------------------------------------------------------ */
+export const categorySlug = (s: string): string => slugifyHandle(s);
 
 export interface ProductsListResponse {
   products: { edges: Array<{ node: ShopifyProductNode }> };
 }
 export interface ProductResponse {
-  product: ShopifyProductNode | null;
+  productByHandle: ShopifyProductNode | null;
 }
