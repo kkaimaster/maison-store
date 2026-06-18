@@ -51,6 +51,7 @@
   },
   "scripts": {
     "build": "tsgo && ([ ! -f autumn.config.ts ] || bunx tsc --noEmit --skipLibCheck autumn.config.ts) && vite build",
+    "vercel-build": "tsgo && vite build",
     "cf-typegen": "wrangler types",
     "check": "tsgo && vite build && wrangler deploy --dry-run",
     "dev": "vite",
