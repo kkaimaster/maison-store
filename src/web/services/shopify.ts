@@ -27,7 +27,7 @@ const DOMAIN: string = env.VITE_SHOPIFY_DOMAIN || '';
 const TOKEN: string = env.VITE_SHOPIFY_ADMIN_TOKEN || env.VITE_SHOPIFY_STOREFRONT_TOKEN || '';
 const CURRENCY: string = env.VITE_SHOP_CURRENCY || 'CAD';
 
-const useStorefront = !env.VITE_SHOPIFY_ADMIN_TOKEN && Boolean(env.VITE_SHOPIFY_STOREFRONT_TOKEN);
+const useStorefront = Boolean(env.VITE_SHOPIFY_STOREFRONT_TOKEN);
 
 export const shopifyConfig = {
   domain: DOMAIN,
